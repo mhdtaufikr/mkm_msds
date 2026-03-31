@@ -11,7 +11,10 @@ Route::post('/shop', [IndexController::class, 'storeShop'])->name('shop.store');
 Route::post('/document', [IndexController::class, 'storeDocument'])->name('document.store');
 Route::delete('/document/{id}', [IndexController::class, 'deleteDocument'])->name('document.delete');
 Route::get('/shop/{id}', [IndexController::class, 'show'])->name('shop.show');
-
+// 🔥 route khusus preview PDF
+Route::get('/preview/{file}', [IndexController::class, 'preview'])
+    ->where('file', '.*')
+    ->name('doc.preview');
 
 Route::get('/qr', function (Request $request) {
     return response(

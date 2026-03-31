@@ -64,10 +64,24 @@ class IndexController extends Controller
         return back();
     }
 
-        public function show($id)
+    public function show($id)
     {
         $shop = Shop::with('documents')->findOrFail($id);
 
         return view('show', compact('shop'));
+    }
+
+    public function preview($file)
+    {
+        $path = storage_path('app/public/' . $file);
+
+        if (!file_exists($path)) {
+            abort(404);
+        }
+
+        return response()->file($path, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . basename($path) . '"'
+        ]);
     }
 }
